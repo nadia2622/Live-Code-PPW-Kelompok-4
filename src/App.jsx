@@ -33,11 +33,7 @@ function App() {
       <main>
         <Hero image={recipes.meals?.[0]?.strMealThumb} />
 
-        <CategoryList
-          {...categoriesState}
-          selected={isSearching ? null : category}
-          onSelect={handleSelectCategory}
-        />
+        
 
         <section id="recipes" className="section container" aria-labelledby="recipes-title">
           <div className="section__head">
@@ -46,6 +42,12 @@ function App() {
             </h2>
             <SearchBar value={query} onChange={setQuery} onClear={() => setQuery("")} />
           </div>
+
+          <CategoryList
+            {...categoriesState}
+            selected={isSearching ? null : category}
+            onSelect={handleSelectCategory}
+          />
 
           <RecipeList
             meals={active.meals}
