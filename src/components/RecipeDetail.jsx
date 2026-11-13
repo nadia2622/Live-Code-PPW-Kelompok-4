@@ -67,7 +67,7 @@ function RecipeDetail({ id, onClose }) {
 
         {meal && (
           <article className="detail">
-            <img className="detail__img" src={`${meal.strMealThumb}/medium`} alt={meal.strMeal} />
+            <img className="detail__img" src={meal.strMealThumb} alt={meal.strMeal} />
 
             <div className="detail__content">
               <h2 id="detail-title">{meal.strMeal}</h2>

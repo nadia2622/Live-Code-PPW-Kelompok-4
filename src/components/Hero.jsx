@@ -23,7 +23,7 @@ function Hero({ image }) {
       <div className="hero__visual">
         <Bow />
         {image ? (
-          <img src={`${image}/medium`} alt="Hidangan pilihan dari koleksi resep Kokwet Memasak" />
+          <img src={image} alt="Hidangan pilihan dari koleksi resep Kokwet Memasak" />
         ) : (
           <div className="hero__placeholder" aria-hidden="true" />
         )}

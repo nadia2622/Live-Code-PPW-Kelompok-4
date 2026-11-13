@@ -1,17 +1,25 @@
-function RecipeCard({ meal, categoryLabel, onSelect }) {
-  const category = meal.strCategory ?? categoryLabel;
-  const info = [category, meal.strArea].filter(Boolean).join(" • ");
+function RecipeCard({ meal, recipe, categoryLabel, onSelect }) {
+  const item = meal || recipe;
+  if (!item) return null;
+
+  const category = item.strCategory ?? categoryLabel;
+  const info = [category, item.strArea].filter(Boolean).join(" • ");
 
   return (
     <article className="recipe-card">
       <button
+        type="button"
         className="recipe-card__btn"
-        onClick={() => onSelect(meal.idMeal)}
-        aria-label={`Lihat resep ${meal.strMeal}`}
+        onClick={() => onSelect?.(item.idMeal)}
+        aria-label={`Lihat resep ${item.strMeal}`}
       >
-        <img src={`${meal.strMealThumb}/medium`} alt={meal.strMeal} loading="lazy" />
+        <img
+          src={item.strMealThumb ? `${item.strMealThumb}/preview` : ""}
+          alt={item.strMeal}
+          loading="lazy"
+        />
         <div className="recipe-card__body">
-          <h3>{meal.strMeal}</h3>
+          <h3>{item.strMeal}</h3>
           {info && <p className="recipe-card__info">{info}</p>}
         </div>
       </button>

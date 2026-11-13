@@ -1,35 +1,39 @@
-import React from 'react';
-import { useRecipes } from '../hooks/useRecipes';
-import RecipeCard from './RecipeCard';
+import RecipeCard from "./RecipeCard.jsx";
+import StatusMessage from "./StatusMessage.jsx";
 
-const RecipeList = () => {
-    const { recipes, isLoading, error } = useRecipes();
+function RecipeList({
+  meals = [],
+  loading = false,
+  error = null,
+  onRetry,
+  onSelect,
+  categoryLabel,
+  emptyMessage = "Belum ada resep di kategori ini.",
+}) {
+  if (loading) {
+    return <StatusMessage type="loading" message="Mengambil data resep..." />;
+  }
 
-    if (isLoading) {
-        return <div className="loading-state">⏳ Mengambil data resep...</div>;
-    }
+  if (error) {
+    return <StatusMessage type="error" message={error} onRetry={onRetry} />;
+  }
 
-    if (error) {
-        return <div className="error-state">❌ {error}</div>;
-    }
+  if (!meals || meals.length === 0) {
+    return <StatusMessage type="empty" message={emptyMessage} />;
+  }
 
-    if (recipes.length === 0) {
-        return <div className="empty-state">📭 Belum ada resep.</div>;
-    }
-
-    return (
-        <div className="recipe-list-container">
-            {/* 
-        Styling container ini urusannya Abidah (grid/flex). 
-      */}
-            {recipes.map((recipe) => (
-                <RecipeCard
-                    key={recipe.idMeal} // Sesuaikan dengan nama ID dari API
-                    recipe={recipe}     // Melempar seluruh data satu resep ke komponen Sukma
-                />
-            ))}
-        </div>
-    );
-};
+  return (
+    <div className="recipe-grid">
+      {meals.map((meal) => (
+        <RecipeCard
+          key={meal.idMeal}
+          meal={meal}
+          categoryLabel={categoryLabel}
+          onSelect={onSelect}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default RecipeList;

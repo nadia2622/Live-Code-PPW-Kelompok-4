@@ -7,11 +7,16 @@ import RecipeList from "./components/RecipeList.jsx";
 import RecipeDetail from "./components/RecipeDetail.jsx";
 import Footer from "./components/Footer.jsx";
 import { useRecipeSearch } from "./hooks/useRecipeSearch.js";
+import { useCategories, useRecipes } from "./hooks/useRecipes.js";
 
 function App() {
-  const [category, setCategory] = useState("Dessert"); 
-  const [query, setQuery] = useState("");             
-  const search = useRecipeSearch(query);               
+  const [category, setCategory] = useState("Dessert");
+  const [query, setQuery] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
+
+  const categoriesState = useCategories();
+  const recipes = useRecipes(category);
+  const search = useRecipeSearch(query);
 
   const isSearching = query.trim() !== "";
   const active = isSearching ? search : recipes;
@@ -26,7 +31,7 @@ function App() {
     <>
       <Navbar />
       <main>
-        <Hero image={recipes.meals[0]?.strMealThumb} />
+        <Hero image={recipes.meals?.[0]?.strMealThumb} />
 
         <CategoryList
           {...categoriesState}
